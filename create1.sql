@@ -62,22 +62,24 @@ CREATE TABLE Prova_Individual (
 
 CREATE TABLE SplitEstafetas (
     NadadorID INT,
+    ProvaID INT,
     EstafetasID INT,
     TempoSplit TIME,
     DistanciaSplit INT,
-    PRIMARY KEY (NadadorID, EstafetasID),
+    PRIMARY KEY (NadadorID, ProvaID, EstafetasID),
     FOREIGN KEY (NadadorID) REFERENCES Nadador(NadadorID),
-    FOREIGN KEY (EstafetasID) REFERENCES Prova_Estafetas(EstafetasID)
+    FOREIGN KEY (ProvaID, EstafetasID) REFERENCES Prova_Estafetas(ProvaID, EstafetasID)
 );
 
 CREATE TABLE SplitIndividuais (
     NadadorID INT,
-    IndividuaisID INT,
+    ProvaID INT,
+    IndividualID INT,
     TempoSplit TIME,
     DistanciaSplit INT,
-    PRIMARY KEY (NadadorID, IndividuaisID),
+    PRIMARY KEY (NadadorID, ProvaID, IndividualID),
     FOREIGN KEY (NadadorID) REFERENCES Nadador(NadadorID),
-    FOREIGN KEY (IndividuaisID) REFERENCES Prova_Individual(IndividualID)
+    FOREIGN KEY (ProvaID, IndividualID) REFERENCES Prova_Individual(ProvaID, IndividualID)
 );
 
 CREATE TABLE Estilo (
@@ -97,7 +99,7 @@ CREATE TABLE Distancia (
 CREATE TABLE Competicao (
     CompeticaoID INT PRIMARY KEY,
     NomeCompeticao VARCHAR(255),
-    Data DATE CHECK (YEAR(Data) = 2022),
+    Data DATE,
     PiscinaID INT,
     FOREIGN KEY (PiscinaID) REFERENCES Piscina(PiscinaID)
 );
